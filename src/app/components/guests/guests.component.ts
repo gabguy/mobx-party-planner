@@ -1,27 +1,31 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { GuestsStore } from '../../stores/guests.store';
 import { Guest } from '../../models/guest.model';
+
+export type GuestsFilter = 'all' | 'attending' | 'notAttending';
 
 @Component({
   selector: 'pp-guests',
   templateUrl: './guests.component.html',
-  styleUrls: ['./guests.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./guests.component.scss']
 })
 export class GuestsComponent implements OnInit {
+  @Input() guests: Guest[];
+  @Input() attendingGuests: Guest[];
+  @Input() notAttendingGuests: Guest[];
+  @Output() remove = new EventEmitter<number>();
+  @Output() setAttending = new EventEmitter<{guestId: number, attending: boolean}>();
+  filter: GuestsFilter = 'all';
 
-  constructor(public guestsStore: GuestsStore) { }
+  constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   removeGuest(guest: Guest) {
-    this.guestsStore.removeGuest(guest.id);
+    this.remove.emit(guest.id);
   }
 
-  toggleAttending(guest: Guest) {
-    this.guestsStore.setGuestAttending(guest.id, !guest.attending);
+  toggleAttending(guest: Guest, attending: boolean) {
+    this.setAttending.emit({guestId: guest.id, attending});
   }
-
 }

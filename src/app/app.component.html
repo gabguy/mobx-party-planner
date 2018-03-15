@@ -1,8 +1,12 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>Party Planner</h1>
+<div *mobxAutorun>
+  <div>
+    <h1>Party Planner</h1>
+  </div>
+  <pp-add-guest (add)="addGuest($event)"></pp-add-guest>
+  <pp-guests [guests]="guestsStore.guests"
+             [attendingGuests]="guestsStore.attendingGuests"
+             [notAttendingGuests]="guestsStore.notAttendingGuests"
+             (remove)="removeGuest($event)"
+             (setAttending)="setGuestAttending($event)"></pp-guests>
+  <pp-attending [attendingGuests]="guestsStore.attendingGuestsAmount"></pp-attending>
 </div>
-<pp-add-guest></pp-add-guest>
-<pp-guests></pp-guests>
-
-

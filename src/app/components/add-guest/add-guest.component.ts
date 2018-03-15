@@ -1,18 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Guest } from '../../models/guest.model';
-import { GuestsStore } from '../../stores/guests.store';
 
 @Component({
   selector: 'pp-add-guest',
   templateUrl: './add-guest.component.html',
-  styleUrls: ['./add-guest.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./add-guest.component.scss']
 })
 export class AddGuestComponent implements OnInit {
+  @Output() add = new EventEmitter<Guest>();
   id: number = 0;
   guest: Guest;
 
-  constructor(private guestsStore: GuestsStore) { }
+  constructor() { }
 
   ngOnInit() {
     this._generateNewGuest();
@@ -20,7 +19,7 @@ export class AddGuestComponent implements OnInit {
 
   addGuest() {
     if(this.guest.name) {
-      this.guestsStore.addGuest(this.guest);
+      this.add.emit(this.guest);
       this._generateNewGuest();
     }
   }

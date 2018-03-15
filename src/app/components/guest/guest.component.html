@@ -1,0 +1,6 @@
+<span>{{guest.name}}</span>
+<input type="checkbox"
+       name="attending"
+       [ngModel]="guest.attending"
+       (click)="toggleAttending.emit(!guest.attending)" />
+<button (click)="remove.emit()"><i class="material-icons">close</i></button>
