@@ -1,0 +1,12 @@
+<ol *mobxAutorun>
+  <li *ngFor="let guest of guestsStore.guests">
+    <span>{{guest.name}}</span>
+    <input type="checkbox" name="attending" [attr.value]="guest.attending" (click)="toggleAttending(guest)" />
+    <button (click)="removeGuest(guest)">X</button>
+  </li>
+</ol>
+
+<div>
+  <span>Attending guests: </span>
+  <span>{{guestsStore.attendingGuests}}</span>
+</div>

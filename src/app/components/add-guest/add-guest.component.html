@@ -1,0 +1,5 @@
+<form (submit)="addGuest()">
+  <label for="guestName">Guest name: </label>
+  <input id="guestName" name="guestName" [(ngModel)]="guest.name" autocomplete="off" />
+  <button type="submit">Add guest</button>
+</form>
