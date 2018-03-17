@@ -1,29 +1,15 @@
 <div class="filter">
   <label for="filter">Filter by: </label>
-  <select id="filter" [(ngModel)]="filter">
+  <select id="filter" #selectFilter (change)="filterChanged.emit(selectFilter.value)">
     <option value="all">All</option>
     <option value="attending">Attending</option>
     <option value="notAttending">Not attending</option>
   </select>
 </div>
-<ol *ngIf="filter === 'all'">
+<ol>
   <li *ngFor="let guest of guests">
     <pp-guest [guest]="guest"
               (toggleAttending)="toggleAttending(guest, $event)"
-              (remove)="removeGuest(guest)"></pp-guest>
-  </li>
-</ol>
-<ol *ngIf="filter === 'attending'">
-  <li *ngFor="let guest of attendingGuests">
-    <pp-guest [guest]="guest"
-              (toggleAttending)="toggleAttending(guest, $event)"
-              (remove)="removeGuest(guest)"></pp-guest>
-  </li>
-</ol>
-<ol *ngIf="filter === 'notAttending'">
-  <li *ngFor="let guest of notAttendingGuests">
-    <pp-guest [guest]="guest"
-              (toggleAttending)="toggleAttending(guest, $event)"
-              (remove)="removeGuest(guest)"></pp-guest>
+              (remove)="remove.emit(guest.id)"></pp-guest>
   </li>
 </ol>

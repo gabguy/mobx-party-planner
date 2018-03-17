@@ -3,10 +3,9 @@
     <h1>Party Planner</h1>
   </div>
   <pp-add-guest (add)="addGuest($event)"></pp-add-guest>
-  <pp-guests [guests]="guestsStore.guests"
-             [attendingGuests]="guestsStore.attendingGuests"
-             [notAttendingGuests]="guestsStore.notAttendingGuests"
+  <pp-guests [guests]="guestsStore.filteredGuests"
              (remove)="removeGuest($event)"
-             (setAttending)="setGuestAttending($event)"></pp-guests>
+             (setAttending)="setGuestAttending($event)"
+             (filterChanged)="changeFilter($event)"></pp-guests>
   <pp-attending [attendingGuests]="guestsStore.attendingGuestsAmount"></pp-attending>
 </div>

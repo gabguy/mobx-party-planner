@@ -1,29 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Guest } from '../../models/guest.model';
-
-export type GuestsFilter = 'all' | 'attending' | 'notAttending';
+import { GuestsFilter } from '../../stores/guests.store';
 
 @Component({
   selector: 'pp-guests',
   templateUrl: './guests.component.html',
   styleUrls: ['./guests.component.scss']
 })
-export class GuestsComponent implements OnInit {
+export class GuestsComponent {
   @Input() guests: Guest[];
-  @Input() attendingGuests: Guest[];
-  @Input() notAttendingGuests: Guest[];
   @Output() remove = new EventEmitter<number>();
   @Output() setAttending = new EventEmitter<{guestId: number, attending: boolean}>();
-  filter: GuestsFilter = 'all';
-
-  constructor() { }
-
-  ngOnInit() { }
-
-  removeGuest(guest: Guest) {
-    this.remove.emit(guest.id);
-  }
+  @Output() filterChanged = new EventEmitter<GuestsFilter>();
 
   toggleAttending(guest: Guest, attending: boolean) {
     this.setAttending.emit({guestId: guest.id, attending});

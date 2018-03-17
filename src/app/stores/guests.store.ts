@@ -4,9 +4,12 @@ import * as _ from 'lodash';
 
 import { Guest } from '../models/guest.model';
 
+export type GuestsFilter = 'all' | 'attending' | 'notAttending';
+
 @Injectable()
 export class GuestsStore {
   @observable guests: Guest[] = [];
+  @observable filter: GuestsFilter = 'all';
 
   @action addGuest(guest: Guest) {
     this.guests = [...this.guests, {...guest, attending: false}];
@@ -26,19 +29,30 @@ export class GuestsStore {
     }
   }
 
-  @computed get attendingGuests() {
-    return _.filter(this.guests, {attending: true});
+  @action setFilter(filter: GuestsFilter) {
+    this.filter = filter;
   }
 
-  @computed get notAttendingGuests() {
-    return _.filter(this.guests, {attending: false});
+  @computed get filteredGuests() {
+    switch(this.filter) {
+      case 'attending':
+        return this._getFilteredGuests(true);
+      case 'notAttending':
+        return this._getFilteredGuests(false);
+      default:
+        return this.guests;
+    }
   }
 
   @computed get attendingGuestsAmount() {
-    return _.filter(this.guests, {attending: true}).length;
+    return this._getFilteredGuests(true).length;
   }
 
-  private _getGuestIndex(guestId: number) {
+  private _getGuestIndex(guestId: number): number {
     return _.findIndex(this.guests, {id: guestId});
+  }
+
+  private _getFilteredGuests(isAttending: boolean): Guest[] {
+    return _.filter(this.guests, {attending: isAttending});
   }
 }

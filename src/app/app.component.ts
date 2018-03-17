@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { Guest } from './models/guest.model';
-import { GuestsStore } from './stores/guests.store';
+import { GuestsFilter, GuestsStore } from './stores/guests.store';
 
 @Component({
   selector: 'pp-root',
@@ -23,5 +23,9 @@ export class AppComponent {
 
   setGuestAttending({guestId, attending}) {
     this.guestsStore.setGuestAttending(guestId, attending);
+  }
+
+  changeFilter(filter: GuestsFilter) {
+    this.guestsStore.setFilter(filter);
   }
 }
